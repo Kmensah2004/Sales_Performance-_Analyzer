@@ -15,17 +15,17 @@ function determinePerformanceRating(averagesales){
     }
 }
 function findTopAndBottomPerformers(salesData) {
-    if (salesData.length === 0) return { topPerformer: null, bottomPerformer: null };
+    if (!salesData || salesData.length === 0) {
+        return { topPerformer: null, bottomPerformer: null };
     }
-    let topPerformer = salesData[0];
-    let bottomPerformer = salesData[0];
+    // Extract total sales into an array
+    const sales = salesData.map(salesperson => salesperson.totalSales);
+    
+    // Find the max and min sales figures
+    const maxSales = Math.max(...sales);
+    const minSales = Math.min(...sales);
+    const topPerformer = salesData.find(salesperson => salesperson.totalSales === maxSales);
+    const bottomPerformer = salesData.find(salesperson => salesperson.totalSales === minSales);
 
-    salesData.reduce((salesperson) => {
-        if (salesperson.totalSales > topPerformer.totalSales) {
-            topPerformer = salesperson;
-        }
-        else if (salesperson.totalSales < bottomPerformer.totalSales) {
-            bottomPerformer = salesperson;
-        }
-    },);
     return { topPerformer, bottomPerformer };
+}
