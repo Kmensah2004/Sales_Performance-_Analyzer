@@ -16,32 +16,33 @@ function determinePerformanceRating(averageSales) {
     }
 }
 function findTopAndBottomPerformers(teamSales) {
-    //  Add together each team member's sales numbers
-    const salesWithTotals = teamSales.map(member => {
-      const totalSales = member.teamSales.reduce((sum, sale) => sum + sale, 0);
-      return { name: member.name, totalSales };
+    // Add together each salesperson's sales numbers
+    const salesWithTotals = teamSales.map(salesperson => {
+      const totalSales = salesperson.sales.reduce((sum, sale) => sum + sale, 0);
+      return { name: salesperson.name, totalSales };
     });
   
-    //  Get the maximum and minimum total sales using Math.max and Math.min
-    const maxSales = Math.max(...salesWithTotals.map(member => member.totalSales));
-    const minSales = Math.min(...salesWithTotals.map(member => member.totalSales));
+    // Get the maximum and minimum total sales using Math.max and Math.min
+    const maxSales = Math.max(...salesWithTotals.map(salesperson => salesperson.totalSales));
+    const minSales = Math.min(...salesWithTotals.map(salesperson => salesperson.totalSales));
   
-    //  Find the team members with the maximum and minimum total sales
-    const topPerformer = salesWithTotals.find(member => member.totalSales === maxSales);
-    const bottomPerformer = salesWithTotals.find(member => member.totalSales === minSales);
+    // Find the salespeople with the maximum and minimum total sales
+    const topPerformer = salesWithTotals.find(salesperson => salesperson.totalSales == maxSales);
+    const bottomPerformer = salesWithTotals.find(salesperson => salesperson.totalSales == minSales);
   
-    //  Return the top and bottom performers
+    // Return the top and bottom performers
     return { topPerformer, bottomPerformer };
-  }
-  
-  // Find and display the top and bottom performers
-  const result = findTopAndBottomPerformers(salesData);
-  console.log("Top Performer:", result.topPerformer);
-  console.log("Bottom Performer:", result.bottomPerformer);
-  function generatePerformanceReport(salesData) {
+}
+
+// Find and display the top and bottom performers
+const result = findTopAndBottomPerformers(salesData);
+console.log("Top Performer:", result.topPerformer);
+console.log("Bottom Performer:", result.bottomPerformer);
+
+function generatePerformanceReport(salesData) {
     // Calculate average sales and performance rating for each salesperson
     const report = salesData.map(salesperson => {
-        const averageSales = calculateAverageSales(salesperson.teamSales);
+        const averageSales = calculateAverageSales(salesperson.sales);
         const performanceRating = determinePerformanceRating(averageSales);
         return {
             name: salesperson.name,
@@ -50,24 +51,23 @@ function findTopAndBottomPerformers(teamSales) {
         };
     });
 
-    //  Identify the top and bottom performers
+    // Identify the top and bottom performers
     const { topPerformer, bottomPerformer } = findTopAndBottomPerformers(salesData);
 
-    // Return a formatted summary report
+    // Return a summary report
     return {
         report: report,
         topPerformer: topPerformer,
         bottomPerformer: bottomPerformer
     };
 }
+
 const salesData = [
-    { name: 'Alice', teamSales: [12000, 15600, 13000] },
-    { name: 'Bob', teamSales: [7000, 6000, 7500] },
-    { name: 'Charlie', teamSales: [3000, 4000, 3500] },
-    { name: 'Diana', teamSales: [9880, 8580, 9200] }
-  ];
+    { name: 'Alice', sales: [12000, 15600, 13000] },
+    { name: 'Bob', sales: [7000, 6000, 7500] },
+    { name: 'Charlie', sales: [3000, 4000, 3500] },
+    { name: 'Diana', sales: [9880, 8580, 9200] }
+];
+
 const performanceReport = generatePerformanceReport(salesData);
 console.log(performanceReport);
-
-  
-  
